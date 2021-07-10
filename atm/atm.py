@@ -3,7 +3,6 @@ import functools
 from flask import(
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-from werkzeug.security import check_password_hash, generate_password_hash
 
 from atm.db import get_db
 
@@ -48,7 +47,7 @@ def withdraw(id):
     account = db.execute(
         'SELECT * FROM account WHERE id = ?', (id,)
     ).fetchone()
-    
+
     update_balance = account['balance'] - int(withdraw)
     db.execute(
         'UPDATE account SET balance = ?'

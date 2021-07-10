@@ -6,10 +6,12 @@
 
 {% block content %}
   <form method="post">
-    <label for="username">Username</label>
+    <label for="username">Username(*nickname)</label>
     <input name="username" id="username">
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password">
+    <label for="card_number">Card Number</label>
+    <input name="card_number" id="card_number">
+    <label for="pin_number">Pin Number</label>
+    <input type="pin_number" name="pin_number" id="pin_number">
     <input type="submit" value="Register">
   </form>
 {% endblock %}

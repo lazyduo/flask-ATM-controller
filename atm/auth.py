@@ -14,7 +14,7 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         card_number = request.form['card_number']
-        password = request.form['password']
+        pin_number = request.form['pin_number']
         db = get_db()
         error = None
 
@@ -22,8 +22,8 @@ def register():
             error = 'Card_number is required.'
         elif not username:
             error = 'Usernname is required.'
-        elif not password:
-            error = 'Password is required.'
+        elif not pin_number:
+            error = 'pin_number is required.'
         elif db.execute(
             'SELECT id FROM account WHERE card_number = ?', (card_number,)
         ).fetchone() is not None:
@@ -31,8 +31,8 @@ def register():
         
         if error is None:
             db.execute(
-                'INSERT INTO account (username, card_number, password) VALUES (?, ?, ?)',
-                (username, card_number, generate_password_hash(password))
+                'INSERT INTO account (username, card_number, pin_number) VALUES (?, ?, ?)',
+                (username, card_number, generate_password_hash(pin_number))
             )
             db.commit()
             return redirect(url_for('auth.login'))
@@ -44,7 +44,6 @@ def register():
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
-        username = request.form['username']
         card_number = request.form['card_number']
         pin_number = request.form['pin_number']
         db = get_db()
